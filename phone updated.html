@@ -35,24 +35,20 @@
         }
 
         body {
-            background: #0f0f11;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background: #fff;
+            display: block;
             margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
 
         /* 手机主容器 */
         .phone-container {
-            width: var(--phone-width);
-            height: var(--phone-height);
+            width: 100vw;
+            height: 100vh;
             position: relative;
             overflow: hidden;
             background: #ffffff;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.65);
-            border-radius: 44px;
-            border: 4px solid #2d2d30;
         }
 
         /* 状态栏 & 灵动岛 */
@@ -147,11 +143,13 @@
 
         /* 主页自由灵动桌面小组件区 (无文字极简版) */
         .home-widgets-row {
-            width: 90%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 10px; margin-bottom: 12px; z-index: 10;
+            width: 90%; display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; margin-bottom: 12px; z-index: 10; align-items: start;
         }
         .widget-frame-item {
-            height: 84px; border-radius: 18px; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: grab;
+            border-radius: 18px; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: grab;
         }
+        .widget-frame-item:first-child { height: 110px; }
+        .widget-frame-item:last-child { height: 72px; }
         .widget-frame-item:active { cursor: grabbing; }
         .widget-frame-item.drag-over { border: 2px dashed rgba(255,255,255,0.8); opacity: 0.7; }
         .widget-pic-display { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; cursor: pointer; }
@@ -161,13 +159,13 @@
         .widget-love-wrap {
             width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; z-index: 2;
         }
-        .widget-love-label { font-size: 10px; color: rgba(255,255,255,0.85); letter-spacing: 1.5px; font-weight: 500; }
+        .widget-love-label { font-size: 10px; color: rgba(100,100,120,0.8); letter-spacing: 1.5px; font-weight: 500; }
         .flip-clock-row { display: flex; align-items: center; gap: 3px; }
         .flip-unit { display: flex; flex-direction: column; align-items: center; gap: 1px; }
         .flip-card {
-            width: 22px; height: 26px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+            width: 20px; height: 24px; background: rgba(255,255,255,0.5); border: 1px solid rgba(180,180,200,0.4);
             border-radius: 5px; display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums;
+            font-size: 13px; font-weight: 700; color: #3a3a4a; font-variant-numeric: tabular-nums;
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             transition: transform 0.15s ease; transform-origin: bottom center;
         }
@@ -177,9 +175,9 @@
             50% { transform: rotateX(-90deg); opacity: 0.3; }
             100% { transform: rotateX(0deg); }
         }
-        .flip-unit-label { font-size: 8px; color: rgba(255,255,255,0.7); }
-        .flip-sep { color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 700; margin-bottom: 8px; }
-        .widget-love-no-date { font-size: 10px; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.5; }
+        .flip-unit-label { font-size: 8px; color: rgba(100,100,120,0.7); }
+        .flip-sep { color: rgba(100,100,120,0.6); font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+        .widget-love-no-date { font-size: 10px; color: rgba(100,100,120,0.7); text-align: center; line-height: 1.5; }
 
         /* 滑动页面容器架构 */
         .app-view-pager-container {
@@ -621,23 +619,52 @@
             </div>
 
             <div class="wx-dock-container">
-                <div class="wx-sticker-bar" id="wxStickerBar">
-                    <div class="wx-sticker-add-btn" onclick="addNewCustomStickerUrl()">＋</div>
-                </div>
                 <div class="wx-input-dock">
                     <button class="wx-action-trigger" onclick="triggerAiResponseDirectly()">
                         <svg class="ins-svg-icon" viewBox="0 0 24 24"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                     </button>
-                    <input type="text" id="wxMainTextInput" class="wx-text-input" placeholder="输入内容..." onfocus="scrollToBottomChat()">
+                    <input type="text" id="wxMainTextInput" class="wx-text-input" placeholder="输入内容..." onfocus="scrollToBottomChat()" onkeydown="if(event.key==='Enter')sendUserMessageCore()">
                     <button class="wx-action-trigger" onclick="togglePlusTray()">
                         <svg class="ins-svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     </button>
                     <button class="wx-send-btn" onclick="sendUserMessageCore()">发送</button>
                 </div>
                 <div class="wx-plus-tray" id="wxPlusTray">
+                    <!-- 转账 -->
                     <div class="tray-node" onclick="triggerDockAction('transfer')">
-                        <div class="tray-icon-box"><svg class="ins-svg-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div>
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        </div>
                         <div class="tray-lbl">转账</div>
+                    </div>
+                    <!-- 表情包 -->
+                    <div class="tray-node" onclick="toggleStickerPanel()">
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                        </div>
+                        <div class="tray-lbl">表情包</div>
+                    </div>
+                    <!-- 识图 -->
+                    <div class="tray-node" onclick="triggerVisionAnalysis()">
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
+                        <div class="tray-lbl">识图</div>
+                    </div>
+                    <!-- 拍照描述 -->
+                    <div class="tray-node" onclick="triggerPhotoDescribe()">
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        </div>
+                        <div class="tray-lbl">拍照</div>
+                    </div>
+                </div>
+                <!-- 表情包面板 -->
+                <div id="wxStickerPanel" style="display:none;background:#f7f7f7;padding:8px;border-top:1px solid #eee;">
+                    <div style="display:flex;align-items:center;gap:8px;overflow-x:auto;" id="wxStickerBar">
+                        <div class="wx-sticker-add-btn" onclick="addNewCustomStickerUrl()">
+                            <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -749,7 +776,7 @@
             <div class="moments-user-anchor">
                 <div class="moments-user-name" id="momentsAnchorNick">网名</div>
                 <div class="moments-user-avatar" onclick="event.stopPropagation();document.getElementById('momentsAvatarUpload').click()">
-                    <img id="momentsAnchorAvat" src="" onerror="this.style.display='none'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                    <img id="momentsAnchorAvat" src="" onerror="this.style.display='none'" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
                     <input type="file" id="momentsAvatarUpload" style="display:none" accept="image/*" onchange="handleMomentsAvatarChange(this)">
                 </div>
             </div>
@@ -1303,7 +1330,7 @@
                                     <div style="font-size:11px; opacity:0.9;">${m.content}</div>
                                 </div>
                             </div>
-                            <div class="wx-transfer-foot"><span>${statusText}</span><span>缘字诀至臻流转</span></div>
+                            <div class="wx-transfer-foot"><span>${statusText}</span></div>
                         </div>
                     </div>
                     ${isUser ? `<div class="wx-msg-avatar"><img src="${userProfile.avatar}"></div>` : ''}
@@ -1340,6 +1367,49 @@
         activeCharacters[selectedCharIndex].messages.push({ role: 'user', content: url, type: 'sticker' });
         rebuildChatBubbles();
     }
+    function toggleStickerPanel() {
+        let panel = document.getElementById('wxStickerPanel');
+        let tray = document.getElementById('wxPlusTray');
+        tray.style.display = 'none';
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function triggerVisionAnalysis() {
+        document.getElementById('wxPlusTray').style.display = 'none';
+        let url = prompt('输入图片URL，AI将识图分析：');
+        if(!url || !url.trim()) return;
+        let char = activeCharacters[selectedCharIndex];
+        if(!char) return;
+        char.messages.push({ role: 'user', content: `[用户发来图片] ${url.trim()}\n请识别并描述这张图片的内容，然后以角色身份回复。` });
+        rebuildChatBubbles();
+        let booksStr = char.boundBooks?.map(id => { let b = worldBooksDataset.find(w=>w.id===id); return b ? b.content : ''; }).join('\n') || '';
+        char.messages.push({ role: 'assistant', content: '...' });
+        rebuildChatBubbles();
+        let resp = await makeApiCall(`${char.prompt}${booksStr}\n当前宿主资料: ${JSON.stringify(userProfile)}\n\n【重要回复规则】你是真实人类，用微信聊天方式说话：每次只说1-2句话，绝不长篇大论，像真人发微信一样简短自然。`, char.messages.slice(0, -1));
+        char.messages.pop();
+        char.messages.push({ role: 'assistant', content: resp });
+        rebuildChatBubbles();
+        saveAllData();
+    }
+
+    async function triggerPhotoDescribe() {
+        document.getElementById('wxPlusTray').style.display = 'none';
+        let desc = prompt('描述你想拍的画面，AI将根据描述回应：');
+        if(!desc || !desc.trim()) return;
+        let char = activeCharacters[selectedCharIndex];
+        if(!char) return;
+        char.messages.push({ role: 'user', content: `[用户发来拍照] 画面描述：${desc.trim()}` });
+        rebuildChatBubbles();
+        let booksStr = char.boundBooks?.map(id => { let b = worldBooksDataset.find(w=>w.id===id); return b ? b.content : ''; }).join('\n') || '';
+        char.messages.push({ role: 'assistant', content: '...' });
+        rebuildChatBubbles();
+        let resp = await makeApiCall(`${char.prompt}${booksStr}\n当前宿主资料: ${JSON.stringify(userProfile)}\n\n【重要回复规则】你是真实人类，用微信聊天方式说话：每次只说1-2句话，绝不长篇大论。`, char.messages.slice(0, -1));
+        char.messages.pop();
+        char.messages.push({ role: 'assistant', content: resp });
+        rebuildChatBubbles();
+        saveAllData();
+    }
+
     function togglePlusTray() { document.getElementById('wxPlusTray').classList.toggle('active'); scrollToBottomChat(); }
 
     function triggerDockAction(type) {
