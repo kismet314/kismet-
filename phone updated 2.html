@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>虚拟终端 - 缘字诀至臻生态系统</title>
+    <title>kismet</title>
     <style>
         :root {
             --phone-width: 375px;
@@ -35,24 +35,20 @@
         }
 
         body {
-            background: #0f0f11;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background: #fff;
+            display: block;
             margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
 
         /* 手机主容器 */
         .phone-container {
-            width: var(--phone-width);
-            height: var(--phone-height);
+            width: 100vw;
+            height: 100vh;
             position: relative;
             overflow: hidden;
             background: #ffffff;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.65);
-            border-radius: 44px;
-            border: 4px solid #2d2d30;
         }
 
         /* 状态栏 & 灵动岛 */
@@ -147,11 +143,13 @@
 
         /* 主页自由灵动桌面小组件区 (无文字极简版) */
         .home-widgets-row {
-            width: 90%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 10px; margin-bottom: 12px; z-index: 10;
+            width: 90%; display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; margin-bottom: 12px; z-index: 10; align-items: start;
         }
         .widget-frame-item {
-            height: 84px; border-radius: 18px; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: grab;
+            border-radius: 18px; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: grab;
         }
+        .widget-frame-item:first-child { height: 110px; }
+        .widget-frame-item:last-child { height: 72px; }
         .widget-frame-item:active { cursor: grabbing; }
         .widget-frame-item.drag-over { border: 2px dashed rgba(255,255,255,0.8); opacity: 0.7; }
         .widget-pic-display { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; cursor: pointer; }
@@ -161,13 +159,13 @@
         .widget-love-wrap {
             width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; z-index: 2;
         }
-        .widget-love-label { font-size: 10px; color: rgba(255,255,255,0.85); letter-spacing: 1.5px; font-weight: 500; }
+        .widget-love-label { font-size: 10px; color: rgba(100,100,120,0.8); letter-spacing: 1.5px; font-weight: 500; }
         .flip-clock-row { display: flex; align-items: center; gap: 3px; }
         .flip-unit { display: flex; flex-direction: column; align-items: center; gap: 1px; }
         .flip-card {
-            width: 22px; height: 26px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+            width: 20px; height: 24px; background: rgba(255,255,255,0.5); border: 1px solid rgba(180,180,200,0.4);
             border-radius: 5px; display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums;
+            font-size: 13px; font-weight: 700; color: #3a3a4a; font-variant-numeric: tabular-nums;
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             transition: transform 0.15s ease; transform-origin: bottom center;
         }
@@ -177,9 +175,9 @@
             50% { transform: rotateX(-90deg); opacity: 0.3; }
             100% { transform: rotateX(0deg); }
         }
-        .flip-unit-label { font-size: 8px; color: rgba(255,255,255,0.7); }
-        .flip-sep { color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 700; margin-bottom: 8px; }
-        .widget-love-no-date { font-size: 10px; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.5; }
+        .flip-unit-label { font-size: 8px; color: rgba(100,100,120,0.7); }
+        .flip-sep { color: rgba(100,100,120,0.6); font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+        .widget-love-no-date { font-size: 10px; color: rgba(100,100,120,0.7); text-align: center; line-height: 1.5; }
 
         /* 滑动页面容器架构 */
         .app-view-pager-container {
@@ -218,8 +216,8 @@
         }
 
         /* 微信模块 */
-        .wechat-view { background: #ededed; }
-        .wx-header-bar { height: 46px; background: #ededed; border-bottom: 1px solid #dcdcdc; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 16px; font-weight: 500; position: relative; }
+        .wechat-view { background: #f5f5f7; }
+        .wx-header-bar { height: 54px; background: rgba(255,255,255,0.75); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 16px; font-weight: 600; color: #1c1c1e; position: relative; letter-spacing: 0.3px; }
         .wx-contacts-master { flex: 1; overflow-y: auto; background: #ffffff; }
         .wx-contact-cell { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid #f2f2f2; cursor: pointer; }
         .wx-contact-avatar { width: 45px; height: 45px; border-radius: 4px; background: #eee; margin-right: 12px; overflow: hidden; }
@@ -229,17 +227,17 @@
         .wx-contact-preview { font-size: 13px; color: #999; margin-top: 2px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 240px; }
 
         /* 微信聊天面板 */
-        .wx-chat-window { position: absolute; top: 54px; left: 0; width: 100%; height: calc(100% - 54px); background: #ededed; display: none; flex-direction: column; z-index: 1100; overflow: hidden; background-size: cover; background-position: center;}
-        .wx-chat-scroller { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; position: relative; }
+        .wx-chat-window { position: absolute; top: 54px; left: 0; width: 100%; height: calc(100% - 54px); background: linear-gradient(160deg, #f0f4f8 0%, #e8eef5 50%, #f5f0f8 100%); display: none; flex-direction: column; z-index: 1100; overflow: hidden; background-size: cover; background-position: center;}
+        .wx-chat-scroller { flex: 1; overflow-y: auto; padding: 16px 12px; display: flex; flex-direction: column; gap: 10px; position: relative; }
         .wx-message-row { display: flex; gap: 10px; width: 100%; position: relative; align-items: flex-start; }
         .wx-message-row.user-side { justify-content: flex-end; }
         .wx-msg-avatar { width: 40px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
         .wx-msg-avatar img { width: 100%; height: 100%; object-fit: cover; }
         
         /* 基础消息气泡 */
-        .wx-msg-bubble { max-width: 65%; padding: 10px 12px; border-radius: 4px; font-size: 15px; line-height: 1.4; color: #191919; word-break: break-all; position: relative; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
-        .wx-message-row.char-side .wx-msg-bubble { background: #ffffff; }
-        .wx-message-row.user-side .wx-msg-bubble { background: var(--wechat-green); }
+        .wx-msg-bubble { max-width: 65%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; color: #1c1c1e; word-break: break-all; position: relative; }
+        .wx-message-row.char-side .wx-msg-bubble { background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.6); border-radius: 4px 18px 18px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .wx-message-row.user-side .wx-msg-bubble { background: rgba(180,210,240,0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); border-radius: 18px 4px 18px 18px; box-shadow: 0 2px 8px rgba(100,160,220,0.15); }
 
         .wx-message-row .wx-transfer-wrapper-pure { max-width: 68%; border-radius: 8px; overflow: hidden; }
         .wx-quote-view { font-size: 11px; color: #7f7f7f; border-left: 2px solid #b2b2b2; padding-left: 4px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -457,16 +455,26 @@
         </div>
 
         <div class="home-widgets-row" id="widgetDragContainer">
-            <div class="widget-frame-item glass-blur-card" draggable="true" onclick="document.getElementById('widgetImgFileLoader').click()">
-                <img id="customWidgetPic" class="widget-pic-display" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=180&auto=format&fit=crop">
-                <input type="file" id="widgetImgFileLoader" style="display:none" accept="image/*" onchange="updateWidgetPicture(event)">
+            <!-- 左侧图片组件 大 -->
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                <div class="widget-frame-item glass-blur-card" draggable="true" style="height:110px;" onclick="document.getElementById('widgetImgFileLoader').click()">
+                    <img id="customWidgetPic" class="widget-pic-display" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=180&auto=format&fit=crop">
+                    <input type="file" id="widgetImgFileLoader" style="display:none" accept="image/*" onchange="updateWidgetPicture(event)">
+                </div>
             </div>
-            <div class="widget-frame-item glass-blur-card" draggable="true" style="background: linear-gradient(135deg, rgba(212,120,154,0.7), rgba(91,127,166,0.7)); border: 1px solid rgba(255,255,255,0.4);">
-                <div class="widget-love-wrap" id="loveWidgetInner">
-                    <div class="widget-love-label">在一起</div>
-                    <div class="flip-clock-row" id="loveFlipRow">
-                        <div class="widget-love-no-date" id="loveNoDateHint">前往纪念日<br>设定日期</div>
+            <!-- 右侧：纪念日+文案 两个小组件 -->
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                <div class="widget-frame-item glass-blur-card" draggable="true" style="height:72px;border:1px solid rgba(255,255,255,0.4);">
+                    <div class="widget-love-wrap" id="loveWidgetInner">
+                        <div class="widget-love-label">在一起</div>
+                        <div class="flip-clock-row" id="loveFlipRow">
+                            <div class="widget-love-no-date" id="loveNoDateHint">前往纪念日<br>设定日期</div>
+                        </div>
                     </div>
+                </div>
+                <!-- 文案小组件 -->
+                <div class="widget-frame-item glass-blur-card" id="memoWidget" draggable="true" style="height:30px;border:1px solid rgba(255,255,255,0.4);cursor:pointer;padding:6px 10px;" onclick="editMemoWidget()">
+                    <div id="memoWidgetText" style="font-size:10px;color:rgba(80,80,100,0.85);text-align:center;line-height:1.4;letter-spacing:0.5px;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">点击添加文案</div>
                 </div>
             </div>
         </div>
@@ -570,6 +578,45 @@
                         <div class="app-title-label">美化中心</div>
                     </div>
                 </div>
+                <!-- 第二页小组件区 -->
+                <div style="width:90%;margin:12px auto 0;display:flex;flex-direction:column;gap:10px;">
+                    <!-- 时间天气组件 -->
+                    <div class="glass-blur-card" style="border-radius:18px;padding:14px 16px;border:1px solid rgba(255,255,255,0.4);display:flex;justify-content:space-between;align-items:center;">
+                        <div>
+                            <div id="p2ClockTime" style="font-size:28px;font-weight:700;color:rgba(40,40,60,0.85);font-variant-numeric:tabular-nums;letter-spacing:-0.5px;">00:00</div>
+                            <div id="p2ClockDate" style="font-size:11px;color:rgba(100,100,120,0.7);margin-top:2px;letter-spacing:0.5px;">Loading...</div>
+                        </div>
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(100,100,140,0.5)" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    </div>
+                    <!-- 随机格言组件 -->
+                    <div class="glass-blur-card" id="p2QuoteWidget" style="border-radius:18px;padding:12px 16px;border:1px solid rgba(255,255,255,0.4);cursor:pointer;" onclick="refreshP2Quote()">
+                        <div style="font-size:9px;color:rgba(140,140,160,0.8);letter-spacing:1px;margin-bottom:6px;">DAILY QUOTE</div>
+                        <div id="p2QuoteText" style="font-size:12px;color:rgba(50,50,70,0.85);line-height:1.6;letter-spacing:0.3px;">点击刷新格言</div>
+                    </div>
+                    <!-- 两列小组件 -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                        <!-- 番茄钟 -->
+                        <div class="glass-blur-card" style="border-radius:18px;padding:12px;border:1px solid rgba(255,255,255,0.4);display:flex;flex-direction:column;align-items:center;gap:6px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,80,80,0.7)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <div id="pomodoroDisplay" style="font-size:18px;font-weight:700;color:rgba(50,50,70,0.85);font-variant-numeric:tabular-nums;">25:00</div>
+                            <div style="display:flex;gap:6px;">
+                                <div onclick="togglePomodoro()" style="font-size:10px;color:rgba(200,80,80,0.8);cursor:pointer;padding:2px 8px;background:rgba(200,80,80,0.1);border-radius:10px;" id="pomodoroBtn">开始</div>
+                                <div onclick="resetPomodoro()" style="font-size:10px;color:rgba(120,120,140,0.7);cursor:pointer;">重置</div>
+                            </div>
+                        </div>
+                        <!-- 心情打卡 -->
+                        <div class="glass-blur-card" style="border-radius:18px;padding:12px;border:1px solid rgba(255,255,255,0.4);display:flex;flex-direction:column;align-items:center;gap:6px;">
+                            <div style="font-size:9px;color:rgba(140,140,160,0.8);letter-spacing:1px;">TODAY'S MOOD</div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+                                <div onclick="setMood(this,'😊')" style="font-size:18px;cursor:pointer;opacity:0.6;">😊</div>
+                                <div onclick="setMood(this,'😔')" style="font-size:18px;cursor:pointer;opacity:0.6;">😔</div>
+                                <div onclick="setMood(this,'😤')" style="font-size:18px;cursor:pointer;opacity:0.6;">😤</div>
+                                <div onclick="setMood(this,'🥰')" style="font-size:18px;cursor:pointer;opacity:0.6;">🥰</div>
+                            </div>
+                            <div id="moodSelectedLabel" style="font-size:10px;color:rgba(120,120,140,0.7);">点选今日心情</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -621,23 +668,52 @@
             </div>
 
             <div class="wx-dock-container">
-                <div class="wx-sticker-bar" id="wxStickerBar">
-                    <div class="wx-sticker-add-btn" onclick="addNewCustomStickerUrl()">＋</div>
-                </div>
                 <div class="wx-input-dock">
                     <button class="wx-action-trigger" onclick="triggerAiResponseDirectly()">
                         <svg class="ins-svg-icon" viewBox="0 0 24 24"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                     </button>
-                    <input type="text" id="wxMainTextInput" class="wx-text-input" placeholder="输入内容..." onfocus="scrollToBottomChat()">
+                    <input type="text" id="wxMainTextInput" class="wx-text-input" placeholder="输入内容..." onfocus="scrollToBottomChat()" onkeydown="if(event.key==='Enter')sendUserMessageCore()">
                     <button class="wx-action-trigger" onclick="togglePlusTray()">
                         <svg class="ins-svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     </button>
                     <button class="wx-send-btn" onclick="sendUserMessageCore()">发送</button>
                 </div>
                 <div class="wx-plus-tray" id="wxPlusTray">
+                    <!-- 转账 -->
                     <div class="tray-node" onclick="triggerDockAction('transfer')">
-                        <div class="tray-icon-box"><svg class="ins-svg-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div>
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        </div>
                         <div class="tray-lbl">转账</div>
+                    </div>
+                    <!-- 表情包 -->
+                    <div class="tray-node" onclick="toggleStickerPanel()">
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                        </div>
+                        <div class="tray-lbl">表情包</div>
+                    </div>
+                    <!-- 识图 -->
+                    <div class="tray-node" onclick="triggerVisionAnalysis()">
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
+                        <div class="tray-lbl">识图</div>
+                    </div>
+                    <!-- 拍照描述 -->
+                    <div class="tray-node" onclick="triggerPhotoDescribe()">
+                        <div class="tray-icon-box">
+                            <svg class="ins-svg-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        </div>
+                        <div class="tray-lbl">拍照</div>
+                    </div>
+                </div>
+                <!-- 表情包面板 -->
+                <div id="wxStickerPanel" style="display:none;background:#f7f7f7;padding:8px;border-top:1px solid #eee;">
+                    <div style="display:flex;align-items:center;gap:8px;overflow-x:auto;" id="wxStickerBar">
+                        <div class="wx-sticker-add-btn" onclick="addNewCustomStickerUrl()">
+                            <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -744,13 +820,12 @@
                 <svg class="ins-svg-icon" viewBox="0 0 24 24" style="stroke: #1c1c1e;"><circle cx="12" cy="12" r="3"></circle><path d="M19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4Z"></path></svg>
             </span>
         </div>
-        <div class="moments-kv" id="momentsKvBg" style="background:#c3cfe2;" onclick="document.getElementById('momentsBgUpload').click()">
+        <div class="moments-kv" id="momentsKvBg" style="background:#c3cfe2;background-size:cover;background-position:center;" onclick="document.getElementById('momentsBgUpload').click()">
             <input type="file" id="momentsBgUpload" style="display:none" accept="image/*" onchange="handleMomentsBgChange(this)">
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,0.6);font-size:12px;pointer-events:none;">点击更换背景图</div>
             <div class="moments-user-anchor">
                 <div class="moments-user-name" id="momentsAnchorNick">网名</div>
                 <div class="moments-user-avatar" onclick="event.stopPropagation();document.getElementById('momentsAvatarUpload').click()">
-                    <img id="momentsAnchorAvat" src="" onerror="this.style.display='none'" style="width:100%;height:100%;object-fit:cover;">
+                    <img id="momentsAnchorAvat" src="" onerror="this.style.display='none'" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
                     <input type="file" id="momentsAvatarUpload" style="display:none" accept="image/*" onchange="handleMomentsAvatarChange(this)">
                 </div>
             </div>
@@ -909,6 +984,7 @@
             <div id="fetchModelStatus" style="font-size:11px;color:#888;margin-bottom:8px;min-height:16px;"></div>
             <button class="action-submit-btn" style="margin-top:8px;" onclick="saveApiConfig()">锁定并对接主线芯片</button>
             <button onclick="diagStorage()" style="width:100%;margin-top:10px;padding:11px;background:#888;color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;">🔍 诊断数据存储</button>
+            <button onclick="saveAllData();alert('✅ 数据已手动保存');" style="width:100%;margin-top:8px;padding:11px;background:#d4789a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">💾 手动保存所有数据</button>
             <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e5e5ea;">
                 <div style="font-size:13px;color:#666;margin-bottom:10px;">数据备份</div>
                 <div style="display:flex;gap:10px;">
@@ -967,12 +1043,12 @@
 </div>
 
 <script>
-    let userProfile = { nick: '未知宿主', name: '张小明', gender: '男', bio: '核心心流投影。', avatar: '' };
+    let userProfile = { nick: '未知宿主', name: '张小明', gender: '男', bio: '核心心流投影。', avatar: 'https://picsum.photos/100' };
     
     let activeCharacters = [
         { 
             name: '纳西妲', 
-            avatar: '', 
+            avatar: 'https://picsum.photos/105', 
             tone: '傲娇, 闷骚', 
             prompt: '你现在不是AI。你是一个活在微信对端的真实人类。你说话细密带有轻微口是心非。', 
             alias: '', isTop: false, specialCare: false, messages: [], boundBooks: ['wb-1'],
@@ -982,7 +1058,9 @@
 
     let userDiaryEntries = [{ id: 1, time: '2026-06-20', text: '买了一杯冷萃，突然想起好久没有跟对端的她好好聊聊了。把想说的话写在日记里，不知道哪天交换之后她看到会是什么表情。', note: '' }];
     let worldBooksDataset = [{ id: 'wb-1', title: '时流底层背景', content: '场景发生在一个ins风氛围的虚拟舱中。' }, { id: 'wb-2', title: '缘字诀编年史', content: '记载了宿主与镜像位面重叠的量子观测日志。' }];
-    let momentsDataset = [{ name: '纳西妲', avatar: '', text: '风吹过来的时候，感觉心头的纸页也被随手翻开了一页。', time: '1小时前', likes: [], comments: [{user: '未知宿主', text: '风也带走了思绪'}] }];
+    
+    // 朋友圈强化数据集（加入点赞和评论）
+    let momentsDataset = [{ name: '纳西妲', avatar: 'https://picsum.photos/105', text: '风吹过来的时候，感觉心头的纸页也被随手翻开了一页。', time: '1小时前', likes: [], comments: [{user: '未知宿主', text: '风也带走了思绪'}] }];
     
     let whisperList = [
         { id: 1, text: '有些话输入到了微信框里，最后还是删除了。只能写在这里了……今天听到他生病的时候，手指明明颤抖得厉害。', time: '23:11', bg: 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=300&auto=format&fit=crop' },
@@ -1007,7 +1085,6 @@
             localStorage.setItem('ph_whisper', JSON.stringify(whisperList));
             localStorage.setItem('ph_gbPosts', JSON.stringify(greenBookPosts));
             localStorage.setItem('ph_calendar', JSON.stringify(calendarAnniversaries));
-            localStorage.setItem('ph_userProfile', JSON.stringify(userProfile));
         } catch(e) { console.warn('saveAllData error', e); }
     }
 
@@ -1020,7 +1097,6 @@
             if(localStorage.getItem('ph_whisper')) whisperList = JSON.parse(localStorage.getItem('ph_whisper'));
             if(localStorage.getItem('ph_gbPosts')) greenBookPosts = JSON.parse(localStorage.getItem('ph_gbPosts'));
             if(localStorage.getItem('ph_calendar')) calendarAnniversaries = JSON.parse(localStorage.getItem('ph_calendar'));
-            if(localStorage.getItem('ph_userProfile')) userProfile = JSON.parse(localStorage.getItem('ph_userProfile'));
         } catch(e) { console.warn('loadAllData error', e); }
     }
 
@@ -1088,8 +1164,13 @@
     syncTimer();
     loadAllData();
     startLoveWidgetTimer();
-    // 加载数据后刷新联系人列表
+    // 加载数据后全量渲染恢复界面
     try { renderContactsListView(); } catch(e) {}
+    try { syncProfileToDom(); } catch(e) {}
+    try { restoreMomentsMedia(); } catch(e) {}
+    // 恢复文案组件
+    let savedMemo = localStorage.getItem('memoWidgetText');
+    if(savedMemo) document.getElementById('memoWidgetText').innerText = savedMemo;
     if(localStorage.getItem('apiUrl')) document.getElementById('hubUrl').value = localStorage.getItem('apiUrl');
     if(localStorage.getItem('apiKey')) document.getElementById('hubKey').value = localStorage.getItem('apiKey');
     if(localStorage.getItem('apiModel')) document.getElementById('hubModel').value = localStorage.getItem('apiModel');
@@ -1301,7 +1382,7 @@
                                     <div style="font-size:11px; opacity:0.9;">${m.content}</div>
                                 </div>
                             </div>
-                            <div class="wx-transfer-foot"><span>${statusText}</span><span>缘字诀至臻流转</span></div>
+                            <div class="wx-transfer-foot"><span>${statusText}</span></div>
                         </div>
                     </div>
                     ${isUser ? `<div class="wx-msg-avatar"><img src="${userProfile.avatar}"></div>` : ''}
@@ -1338,6 +1419,129 @@
         activeCharacters[selectedCharIndex].messages.push({ role: 'user', content: url, type: 'sticker' });
         rebuildChatBubbles();
     }
+    // 第二页小组件
+    const quotes = [
+        '凡是过去，皆为序章。',
+        '你值得被温柔以待。',
+        '慢慢来，比较快。',
+        '与其期待，不如自给自足。',
+        '今天也要好好的。',
+        '生活不必完美，但值得认真。',
+        '有些事只有你自己知道它的重量。',
+        '轻轻的，也可以走很远。',
+    ];
+    function refreshP2Quote() {
+        let el = document.getElementById('p2QuoteText');
+        if(el) el.innerText = quotes[Math.floor(Math.random()*quotes.length)];
+    }
+    function updateP2Clock() {
+        let now = new Date();
+        let h = String(now.getHours()).padStart(2,'0');
+        let m = String(now.getMinutes()).padStart(2,'0');
+        let el = document.getElementById('p2ClockTime');
+        let dateEl = document.getElementById('p2ClockDate');
+        if(el) el.innerText = `${h}:${m}`;
+        if(dateEl) {
+            let days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+            let months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+            dateEl.innerText = `${days[now.getDay()]}  ${now.getDate()} ${months[now.getMonth()]}`;
+        }
+    }
+    setInterval(updateP2Clock, 1000); updateP2Clock();
+    refreshP2Quote();
+
+    let pomodoroRunning = false;
+    let pomodoroSeconds = 25*60;
+    let pomodoroInterval = null;
+    function togglePomodoro() {
+        if(pomodoroRunning) {
+            clearInterval(pomodoroInterval); pomodoroRunning = false;
+            document.getElementById('pomodoroBtn').innerText = '继续';
+        } else {
+            pomodoroRunning = true;
+            document.getElementById('pomodoroBtn').innerText = '暂停';
+            pomodoroInterval = setInterval(() => {
+                pomodoroSeconds--;
+                if(pomodoroSeconds <= 0) { clearInterval(pomodoroInterval); pomodoroRunning = false; pomodoroSeconds = 0; }
+                let m = String(Math.floor(pomodoroSeconds/60)).padStart(2,'0');
+                let s = String(pomodoroSeconds%60).padStart(2,'0');
+                document.getElementById('pomodoroDisplay').innerText = `${m}:${s}`;
+                document.getElementById('pomodoroBtn').innerText = pomodoroRunning ? '暂停' : '开始';
+            }, 1000);
+        }
+    }
+    function resetPomodoro() {
+        clearInterval(pomodoroInterval); pomodoroRunning = false;
+        pomodoroSeconds = 25*60;
+        document.getElementById('pomodoroDisplay').innerText = '25:00';
+        document.getElementById('pomodoroBtn').innerText = '开始';
+    }
+    function setMood(el, mood) {
+        document.getElementById('moodSelectedLabel').innerText = `今日心情 ${mood}`;
+        localStorage.setItem('todayMood', mood + '|' + new Date().toDateString());
+    }
+    let savedMood = localStorage.getItem('todayMood');
+    if(savedMood) {
+        let parts = savedMood.split('|');
+        if(parts[1] === new Date().toDateString()) {
+            document.getElementById('moodSelectedLabel').innerText = `今日心情 ${parts[0]}`;
+        }
+    }
+
+    function editMemoWidget() {
+        let cur = document.getElementById('memoWidgetText').innerText;
+        if(cur === '点击添加文案') cur = '';
+        let txt = prompt('输入文案（最多30字）：', cur);
+        if(txt !== null) {
+            let trimmed = txt.trim().slice(0, 30) || '点击添加文案';
+            document.getElementById('memoWidgetText').innerText = trimmed;
+            localStorage.setItem('memoWidgetText', trimmed);
+        }
+    }
+
+    function toggleStickerPanel() {
+        let panel = document.getElementById('wxStickerPanel');
+        let tray = document.getElementById('wxPlusTray');
+        tray.style.display = 'none';
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function triggerVisionAnalysis() {
+        document.getElementById('wxPlusTray').style.display = 'none';
+        let url = prompt('输入图片URL，AI将识图分析：');
+        if(!url || !url.trim()) return;
+        let char = activeCharacters[selectedCharIndex];
+        if(!char) return;
+        char.messages.push({ role: 'user', content: `[用户发来图片] ${url.trim()}\n请识别并描述这张图片的内容，然后以角色身份回复。` });
+        rebuildChatBubbles();
+        let booksStr = char.boundBooks?.map(id => { let b = worldBooksDataset.find(w=>w.id===id); return b ? b.content : ''; }).join('\n') || '';
+        char.messages.push({ role: 'assistant', content: '...' });
+        rebuildChatBubbles();
+        let resp = await makeApiCall(`${char.prompt}${booksStr}\n当前宿主资料: ${JSON.stringify(userProfile)}\n\n【重要回复规则】你是真实人类，用微信聊天方式说话：每次只说1-2句话，绝不长篇大论，像真人发微信一样简短自然。`, char.messages.slice(0, -1));
+        char.messages.pop();
+        char.messages.push({ role: 'assistant', content: resp });
+        rebuildChatBubbles();
+        saveAllData();
+    }
+
+    async function triggerPhotoDescribe() {
+        document.getElementById('wxPlusTray').style.display = 'none';
+        let desc = prompt('描述你想拍的画面，AI将根据描述回应：');
+        if(!desc || !desc.trim()) return;
+        let char = activeCharacters[selectedCharIndex];
+        if(!char) return;
+        char.messages.push({ role: 'user', content: `[用户发来拍照] 画面描述：${desc.trim()}` });
+        rebuildChatBubbles();
+        let booksStr = char.boundBooks?.map(id => { let b = worldBooksDataset.find(w=>w.id===id); return b ? b.content : ''; }).join('\n') || '';
+        char.messages.push({ role: 'assistant', content: '...' });
+        rebuildChatBubbles();
+        let resp = await makeApiCall(`${char.prompt}${booksStr}\n当前宿主资料: ${JSON.stringify(userProfile)}\n\n【重要回复规则】你是真实人类，用微信聊天方式说话：每次只说1-2句话，绝不长篇大论。`, char.messages.slice(0, -1));
+        char.messages.pop();
+        char.messages.push({ role: 'assistant', content: resp });
+        rebuildChatBubbles();
+        saveAllData();
+    }
+
     function togglePlusTray() { document.getElementById('wxPlusTray').classList.toggle('active'); scrollToBottomChat(); }
 
     function triggerDockAction(type) {
@@ -1732,7 +1936,7 @@
             worldBooksDataset.forEach(b => { if(char.boundBooks.includes(b.id)) booksStr += `\n[挂载世界书背景]: ${b.content}`; });
         }
         char.messages.push({ role: 'assistant', content: '同步中...' }); rebuildChatBubbles();
-        let resp = await makeApiCall(`${char.prompt}${booksStr}\n当前宿主资料: ${JSON.stringify(userProfile)}`, char.messages.slice(0, -1));
+        let resp = await makeApiCall(`${char.prompt}${booksStr}\n当前宿主资料: ${JSON.stringify(userProfile)}\n\n【重要回复规则】你是真实人类，用微信聊天方式说话：每次只说1-2句话，绝不长篇大论，像真人发微信一样简短自然，可以分多条发送。`, char.messages.slice(0, -1));
         char.messages.pop(); char.messages.push({ role: 'assistant', content: resp }); rebuildChatBubbles();
         saveAllData();
     }
@@ -1947,13 +2151,13 @@
         document.getElementById('wxMeDisplayAvatar').src = userProfile.avatar;
         document.getElementById('momentsAnchorNick').innerText = userProfile.nick;
         document.getElementById('momentsAnchorAvat').src = userProfile.avatar;
-        saveAllData();
     }
     function scrollToBottomChat() { setTimeout(() => { const w = document.getElementById('wxMsgLogsWall'); w.scrollTop = w.scrollHeight; }, 100); }
     function blurChatControls() { document.getElementById('bubbleContextMenu').style.display = 'none'; }
 
     syncProfileToDom();
     try { renderContactsListView(); } catch(e) {}
+    window.addEventListener('beforeunload', function() { saveAllData(); });
 </script>
 </body>
 </html>
